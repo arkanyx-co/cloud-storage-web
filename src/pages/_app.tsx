@@ -1,13 +1,12 @@
 import '@/app/styles/globals.css';
 import Head from 'next/head';
 import { AppProps as NextAppProps } from 'next/app';
-import { ThemeProvider } from '@mui/material/styles';
 import CssBaseline from '@mui/material/CssBaseline';
 import { CacheProvider, EmotionCache } from '@emotion/react';
+import { SessionProvider } from 'next-auth/react';
 import createEmotionCache from '@/shared/lib/createEmotionCache';
-import { usePreferredTheme } from '@/shared/lib/theme/usePreferredTheme';
-import { appWithTranslation } from 'next-i18next';
 import { Layout } from '@/shared/ui/Layout';
+import { withProviders } from '@/app/providers';
 
 const clientSideEmotionCache = createEmotionCache();
 
@@ -18,23 +17,19 @@ export interface AppProps extends NextAppProps {
 const App = ({
   Component,
   emotionCache = clientSideEmotionCache,
-  pageProps,
-}: AppProps) => {
-  const theme = usePreferredTheme();
-
-  return (
+  pageProps: { session, ...pageProps },
+}: AppProps) => (
+  <SessionProvider session={session}>
     <CacheProvider value={emotionCache}>
       <Head>
         <meta name="viewport" content="initial-scale=1, width=device-width" />
       </Head>
-      <ThemeProvider theme={theme}>
-        <CssBaseline enableColorScheme />
-        <Layout>
-          <Component {...pageProps} />
-        </Layout>
-      </ThemeProvider>
+      <CssBaseline enableColorScheme />
+      <Layout>
+        <Component {...pageProps} />
+      </Layout>
     </CacheProvider>
-  );
-};
+  </SessionProvider>
+);
 
-export default appWithTranslation(App);
+export default withProviders(App);
