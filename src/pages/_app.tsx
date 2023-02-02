@@ -7,6 +7,7 @@ import { CacheProvider, EmotionCache } from '@emotion/react';
 import createEmotionCache from '@/shared/lib/createEmotionCache';
 import { usePreferredTheme } from '@/shared/lib/theme/usePreferredTheme';
 import { appWithTranslation } from 'next-i18next';
+import { Layout } from '@/shared/ui/Layout';
 
 const clientSideEmotionCache = createEmotionCache();
 
@@ -28,7 +29,9 @@ const App = ({
       </Head>
       <ThemeProvider theme={theme}>
         <CssBaseline enableColorScheme />
-        <Component {...pageProps} />
+        <Layout>
+          <Component {...pageProps} />
+        </Layout>
       </ThemeProvider>
     </CacheProvider>
   );
