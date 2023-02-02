@@ -5,7 +5,8 @@ import { ThemeProvider } from '@mui/material/styles';
 import CssBaseline from '@mui/material/CssBaseline';
 import { CacheProvider, EmotionCache } from '@emotion/react';
 import createEmotionCache from '@/shared/lib/createEmotionCache';
-import { usePreferredTheme } from '@/shared/themes/usePreferredTheme';
+import { usePreferredTheme } from '@/shared/lib/theme/usePreferredTheme';
+import { appWithTranslation } from 'next-i18next';
 
 const clientSideEmotionCache = createEmotionCache();
 
@@ -33,4 +34,4 @@ const App = ({
   );
 };
 
-export default App;
+export default appWithTranslation(App);

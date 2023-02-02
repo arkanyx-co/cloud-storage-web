@@ -1,6 +1,13 @@
 import { Box, Container, Typography } from '@mui/material';
+import { GetStaticProps } from 'next';
+import { serverSideTranslations } from 'next-i18next/serverSideTranslations';
+import { useTranslation } from 'next-i18next';
 
-export default function Home() {
+interface IndexProps {}
+
+const Index = () => {
+  const { t } = useTranslation();
+
   return (
     <Container maxWidth="lg">
       <Box
@@ -13,9 +20,19 @@ export default function Home() {
         }}
       >
         <Typography variant="h4" component="h1" gutterBottom>
-          MUI v5 + Next.js with TypeScript
+          {t('a')}
         </Typography>
       </Box>
     </Container>
   );
-}
+};
+
+export const getStaticProps: GetStaticProps<IndexProps> = async ({
+  locale,
+}) => ({
+  props: {
+    ...(await serverSideTranslations(locale ?? 'en')),
+  },
+});
+
+export default Index;
