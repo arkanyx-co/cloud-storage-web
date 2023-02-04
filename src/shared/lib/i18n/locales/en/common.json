@@ -1,5 +1,9 @@
 {
   "a": "This is a",
   "login": "Login",
-  "logout": "Logout"
+  "logout": "Logout",
+  "menu": {
+    "files": "Files",
+    "favorites": "Favorites"
+  }
 }
