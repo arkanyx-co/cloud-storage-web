@@ -1,11 +1,16 @@
 import { Box, Container, Typography } from '@mui/material';
-import { GetStaticProps } from 'next';
+import { GetServerSideProps } from 'next';
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations';
 import { useTranslation } from 'next-i18next';
+import { setAuthToken } from '@/shared/api/base';
+import { file } from '@/shared/api';
+import { getToken } from 'next-auth/jwt';
 
-interface IndexProps {}
+interface IndexProps {
+  files: unknown[];
+}
 
-const Index = () => {
+const Index = (_props: IndexProps) => {
   const { t } = useTranslation();
 
   return (
@@ -27,12 +32,19 @@ const Index = () => {
   );
 };
 
-export const getStaticProps: GetStaticProps<IndexProps> = async ({
+export const getServerSideProps: GetServerSideProps<IndexProps> = async ({
+  req,
   locale,
-}) => ({
-  props: {
-    ...(await serverSideTranslations(locale ?? 'en')),
-  },
-});
+}) => {
+  const token = await getToken({ req });
+  setAuthToken(token?.accessToken!);
+  const { data: files } = await file.getFiles();
+  return {
+    props: {
+      files,
+      ...(await serverSideTranslations(locale ?? 'en')),
+    },
+  };
+};
 
 export default Index;
