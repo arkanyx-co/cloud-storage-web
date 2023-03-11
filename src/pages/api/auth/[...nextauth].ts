@@ -26,5 +26,9 @@ export default NextAuth({
 
       return token;
     },
+    session: ({ session, token }) => {
+      session.accessToken = token.accessToken;
+      return session;
+    },
   },
 });

@@ -22,7 +22,7 @@ export const Profile = ({ user }: ProfileProps) => {
     <>
       <Tooltip title={user?.name}>
         <IconButton sx={{ p: 0 }} onClick={handleOpenUserMenu}>
-          <Avatar src={user?.image ?? ''} />
+          <Avatar src={user?.image ?? ''} alt={user.name ?? ''} />
         </IconButton>
       </Tooltip>
       <UserMenu anchorEl={anchorElUser} onClose={handleCloseUserMenu} />

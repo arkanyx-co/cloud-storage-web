@@ -5,6 +5,10 @@ declare module 'next-auth' {
     accessToken?: string;
     refreshToken?: string;
   }
+
+  interface Session {
+    accessToken?: string;
+  }
 }
 
 declare module 'next-auth/jwt' {

@@ -2,10 +2,9 @@ import { usePreferredTheme } from '@/shared/lib/theme/usePreferredTheme';
 import { ThemeProvider } from '@mui/material';
 import { ComponentType } from 'react';
 
-export const withTheme =
-  <P extends {}>(Component: ComponentType<P>) =>
+export const withTheme = <P extends {}>(Component: ComponentType<P>) => {
   // eslint-disable-next-line react/display-name
-  (props: P) => {
+  const WrappedComponent = (props: P) => {
     const theme = usePreferredTheme();
 
     return (
@@ -14,3 +13,7 @@ export const withTheme =
       </ThemeProvider>
     );
   };
+
+  Object.assign(WrappedComponent, Component);
+  return WrappedComponent;
+};
