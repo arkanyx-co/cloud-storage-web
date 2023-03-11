@@ -1,9 +1,12 @@
 {
-  "a": "This is a",
   "login": "Login",
   "logout": "Logout",
   "menu": {
     "files": "Files",
     "favorites": "Favorites"
+  },
+  "fileDropzone": {
+    "title": "Select files or drag them here",
+    "buttonText": "Upload files"
   }
 }

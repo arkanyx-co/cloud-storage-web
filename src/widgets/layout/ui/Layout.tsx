@@ -2,7 +2,7 @@ import { Header } from '@/widgets/header';
 import { MainMenu } from '@/widgets/mainMenu';
 import { PropsWithChildren, useState } from 'react';
 import { styled } from '@mui/material/styles';
-import { Box } from '@mui/material';
+import { Container } from '@mui/material';
 
 const menuWidth = 280;
 
@@ -25,16 +25,7 @@ export const Layout = ({ children }: PropsWithChildren<LayoutProps>) => {
     <>
       <Header menuWidth={menuWidth} onMenuOpen={() => setIsMenuOpen(true)} />
       <LayoutRoot>
-        <Box
-          sx={{
-            display: 'flex',
-            flex: '1 1 auto',
-            flexDirection: 'column',
-            width: '100%',
-          }}
-        >
-          {children}
-        </Box>
+        <Container maxWidth="lg">{children}</Container>
       </LayoutRoot>
       <MainMenu
         menuWidth={menuWidth}
