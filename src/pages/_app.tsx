@@ -1,12 +1,14 @@
 import '@/app/styles/globals.css';
 import Head from 'next/head';
-import { AppProps as NextAppProps } from 'next/app';
+import NextApp, { AppContext, AppProps as NextAppProps } from 'next/app';
 import CssBaseline from '@mui/material/CssBaseline';
 import { CacheProvider, EmotionCache } from '@emotion/react';
 import { SessionProvider } from 'next-auth/react';
 import createEmotionCache from '@/shared/lib/createEmotionCache';
 import { withProviders } from '@/app/providers';
 import { Layout } from '@/widgets/layout';
+import { getToken } from 'next-auth/jwt';
+import { api } from '@/shared/api/base';
 
 const clientSideEmotionCache = createEmotionCache();
 
@@ -31,5 +33,18 @@ const App = ({
     </CacheProvider>
   </SessionProvider>
 );
+
+App.getInitialProps = async (context: AppContext) => {
+  const pageProps = await NextApp.getInitialProps(context);
+
+  if (!api.defaults.headers.common.Authorization) {
+    // @ts-ignore
+    const token = await getToken({ req: context.ctx.req });
+
+    api.defaults.headers.common.Authorization = `Bearer ${token?.accessToken}`;
+  }
+
+  return pageProps;
+};
 
 export default withProviders(App);

@@ -1,9 +1,7 @@
 import { GetServerSideProps } from 'next';
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations';
 import { useTranslation } from 'next-i18next';
-import { setAuthToken } from '@/shared/api/base';
 import { file } from '@/shared/api';
-import { getToken } from 'next-auth/jwt';
 import { FileDropzone } from '@/entities/file';
 
 interface IndexProps {
@@ -29,11 +27,8 @@ const Index = (_props: IndexProps) => {
 };
 
 export const getServerSideProps: GetServerSideProps<IndexProps> = async ({
-  req,
   locale,
 }) => {
-  const token = await getToken({ req });
-  setAuthToken(token?.accessToken!);
   const { data: files } = await file.getFiles();
   return {
     props: {

@@ -14,7 +14,3 @@ api.interceptors.request.use(async (request) => {
   }
   return request;
 });
-
-export const setAuthToken = (accessToken: string) => {
-  api.defaults.headers.common.Authorization = `Bearer ${accessToken}`;
-};
